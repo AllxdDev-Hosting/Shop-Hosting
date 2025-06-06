@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment - AllxdDev-Hosting</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0f1729;
+      --text-color: #ffffff;
+      --accent-color: #00d9ff;
+      --secondary-color: #1a2236;
+      --card-shadow: 0 10px 30px rgba(0, 217, 255, 0.1);
+      --gradient-primary: linear-gradient(135deg, #00d9ff 0%, #0066ff 100%);
+      --gradient-bg: linear-gradient(135deg, #0f1729 0%, #1a2236 100%);
+      --transition-speed: 0.4s;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --input-bg: rgba(26, 34, 54, 0.8);
+      --success-color: #00e676;
+      --error-color: #ff5252;
+      --menu-active-bg: rgba(0, 217, 255, 0.2);
+      --menu-hover-bg: rgba(0, 217, 255, 0.1);
+    }
+    
+    [data-theme="light"] {
+      --bg-color: #f5f7fa;
+      --text-color: #1a2236;
+      --accent-color: #0066ff;
+      --secondary-color: #ffffff;
+      --card-shadow: 0 10px 30px rgba(0, 102, 255, 0.1);
+      --gradient-primary: linear-gradient(135deg, #0066ff 0%, #5e17eb 100%);
+      --gradient-bg: linear-gradient(135deg, #f5f7fa 0%, #e9ecf2 100%);
+      --border-color: rgba(0, 0, 0, 0.1);
+      --input-bg: rgba(245, 247, 250, 0.8);
+      --success-color: #00c853;
+      --error-color: #d50000;
+      --menu-active-bg: rgba(0, 102, 255, 0.2);
+      --menu-hover-bg: rgba(0, 102, 255, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--gradient-bg);
+      color: var(--text-color);
+      transition: all var(--transition-speed) ease;
+      overflow-x: hidden;
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.5;
+      z-index: -1;
+    }
+    
+    [data-theme="light"] body::before {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230066ff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(15, 23, 41, 0.95);
+      transition: all var(--transition-speed) ease;
+    }
+    
+    [data-theme="light"] header {
+      background-color: rgba(245, 247, 250, 0.95);
+    }
+    
+    .title {
+      font-size: 1.8em;
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 1px;
+      position: relative;
+      transition: all var(--transition-speed) ease;
+    }
+    
+    .title::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: width 0.5s ease;
+    }
+    
+    .title:hover::after {
+      width: 100%;
+    }
+    
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .theme-switch {
+      background: var(--secondary-color);
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .theme-switch:hover {
+      transform: translateY(-3px) rotate(15deg);
+      background: var(--accent-color);
+    }
+    
+    .theme-switch img {
+      width: 22px;
+      height: 22px;
+      transition: transform 0.3s ease;
+    }
+    
+    .menu-toggle {
+      width: 30px;
+      height: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      z-index: 101;
+    }
+    
+    .menu-toggle:hover {
+      transform: scale(1.1);
+    }
+    
+    .menu-toggle span {
+      height: 3px;
+      width: 100%;
+      background: var(--gradient-primary);
+      border-radius: 5px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    
+    .menu-toggle.active span:nth-child(1) {
+      transform: translateY(11px) rotate(45deg);
+    }
+    
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .menu-toggle.active span:nth-child(3) {
+      transform: translateY(-11px) rotate(-45deg);
+    }
+    
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 98;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: var(--secondary-color);
+      padding: 80px 20px 20px;
+      transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+      z-index: 99;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border-left: 1px solid var(--border-color);
+    }
+    
+    .sidebar.open {
+      right: 0;
+    }
+    
+    .sidebar a {
+      display: block;
+      margin: 15px 0;
+      color: var(--accent-color);
+      text-decoration: none;
+      font-size: 1.1em;
+      font-weight: 500;
+      position: relative;
+      padding: 12px 20px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      background-color: transparent;
+    }
+    
+    .sidebar a:hover {
+      background-color: var(--menu-hover-bg);
+      transform: translateX(5px);
+    }
+    
+    .sidebar a:active {
+      background-color: var(--menu-active-bg);
+    }
+    
+    /* Payment Container */
+    .payment-container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 0 20px;
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+      animation-delay: 0.2s;
+    }
+    
+    .payment-header {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+    
+    .payment-header::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--gradient-primary);
+      border-radius: 3px;
+    }
+    
+    .payment-title {
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 15px;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .payment-description {
+      font-size: 1.1em;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .payment-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    
+    .payment-methods {
+      background: var(--secondary-color);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .payment-methods:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .methods-title {
+      font-size: 1.8em;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: var(--accent-color);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .methods-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--gradient-primary);
+      border-radius: 3px;
+    }
+    
+    .method-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    
+    .method-item:hover {
+      background: rgba(0, 217, 255, 0.05);
+      border-color: var(--accent-color);
+      transform: translateX(5px);
+    }
+    
+    .method-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gradient-primary);
+    }
+    
+    .method-icon img {
+      width: 30px;
+      height: 30px;
+      filter: brightness(0) invert(1);
+    }
+    
+    .method-info {
+      flex: 1;
+    }
+    
+    .method-info h4 {
+      font-size: 1.2em;
+      margin-bottom: 5px;
+      color: var(--text-color);
+    }
+    
+    .method-info p {
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+    
+    .copy-btn {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 0.8em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .copy-btn img {
+      width: 14px;
+      height: 14px;
+      filter: brightness(0) invert(1);
+    }
+    
+    .qr-section {
+      background: var(--secondary-color);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: var(--card-shadow);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .qr-section:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .qr-title {
+      font-size: 1.8em;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: var(--accent-color);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .qr-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: var(--gradient-primary);
+      border-radius: 3px;
+    }
+    
+    .qr-code {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 20px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+    
+    .qr-code:hover {
+      transform: scale(1.05);
+    }
+    
+    .qr-code img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .qr-description {
+      font-size: 1em;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+    
+    .download-btn {
+      display: inline-block;
+      background: var(--gradient-primary);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      border: none;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9em;
+      margin-top: 10px;
+    }
+    
+    .download-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .upload-section {
+      grid-column: 1 / -1;
+      background: var(--secondary-color);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: var(--card-shadow);
+      margin-top: 30px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .upload-section:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .upload-title {
+      font-size: 1.8em;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: var(--accent-color);
+      text-align: center;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .upload-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--gradient-primary);
+      border-radius: 3px;
+    }
+    
+    .upload-form {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+    
+    .form-label {
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text-color);
+    }
+    
+    .form-input {
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: 2px solid var(--border-color);
+      background: var(--input-bg);
+      color: var(--text-color);
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
+    }
+    
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .file-upload {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      width: 100%;
+    }
+    
+    .file-upload input[type="file"] {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    
+    .file-upload-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 40px 20px;
+      border: 2px dashed var(--border-color);
+      border-radius: 10px;
+      background: var(--input-bg);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .file-upload:hover .file-upload-label {
+      border-color: var(--accent-color);
+      background: rgba(0, 217, 255, 0.05);
+    }
+    
+    .file-upload-icon {
+      width: 30px;
+      height: 30px;
+      filter: invert(70%) sepia(59%) saturate(5352%) hue-rotate(171deg) brightness(101%) contrast(101%);
+    }
+    
+    .submit-btn {
+      grid-column: 1 / -1;
+      background: var(--gradient-primary);
+      color: white;
+      padding: 15px 30px;
+      border-radius: 30px;
+      border: none;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .info-section {
+      max-width: 600px;
+      margin: 30px auto 0;
+      background: rgba(0, 217, 255, 0.1);
+      border-radius: 15px;
+      padding: 25px;
+      border-left: 5px solid var(--accent-color);
+    }
+    
+    .info-title {
+      font-size: 1.3em;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--accent-color);
+    }
+    
+    .info-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .info-list li {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .info-list li::before {
+      content: '✓';
+      color: var(--success-color);
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    
+    /* Hidden input for fallback copy */
+    .hidden-input {
+      position: absolute;
+      left: -9999px;
+      opacity: 0;
+    }
+    
+    /* Loading overlay */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .loading-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--accent-color);
+      animation: spin 1s ease-in-out infinite;
+      margin-bottom: 20px;
+    }
+    
+    .loading-text {
+      color: white;
+      font-size: 1.2em;
+      font-weight: 500;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Success modal */
+    .success-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background: var(--secondary-color);
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      max-width: 90%;
+      width: 400px;
+    }
+    
+    .success-modal.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--success-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    
+    .success-icon img {
+      width: 40px;
+      height: 40px;
+      filter: brightness(0) invert(1);
+    }
+    
+    .success-title {
+      font-size: 1.8em;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--accent-color);
+    }
+    
+    .success-message {
+      margin-bottom: 25px;
+      font-size: 1.1em;
+      line-height: 1.6;
+    }
+    
+    .success-btn {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 12px 25px;
+      border-radius: 30px;
+      border: none;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .success-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Footer */
+    .footer {
+      margin-top: 50px;
+      padding: 30px 0;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+    
+    .footer a {
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Responsive design */
+    @media (max-width: 900px) {
+      .payment-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .upload-form {
+        grid-template-columns: 1fr;
+      }
+      
+      .payment-container {
+        padding: 15px;
+      }
+      
+      .payment-title {
+        font-size: 2em;
+      }
+      
+      header {
+        padding: 15px 20px;
+      }
+      
+      .sidebar {
+        width: 250px;
+      }
+      
+      .qr-code {
+        width: 150px;
+        height: 150px;
+      }
+      
+      .method-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+      }
+      
+      .method-info {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="overlay"></div>
+  
+  <header>
+    <div class="title">AllxdDev-Hosting</div>
+    <div class="controls">
+      <button class="theme-switch" onclick="toggleTheme()" aria-label="Toggle theme">
+        <img id="theme-icon" src="https://cdn-icons-png.flaticon.com/512/1164/1164954.png" alt="Theme" />
+      </button>
+      <div class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  
+  <div class="sidebar" id="sidebar">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Me</a>
+    <a href="shop.html">Shop</a>
+    <a href="payment.html">Payment</a>
+    <a href="ai.html">Tanya Staries</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  
+  <!-- Hidden input for fallback copy method -->
+  <input type="text" class="hidden-input" id="hiddenInput" />
+  
+  <!-- Loading overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <div class="loading-text">Mengirim bukti pembayaran...</div>
+  </div>
+  
+  <!-- Success modal -->
+  <div class="success-modal" id="successModal">
+    <div class="success-icon">
+      <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Success">
+    </div>
+    <h2 class="success-title">Berhasil Terkirim!</h2>
+    <p class="success-message">Bukti pembayaran Anda telah berhasil dikirim ke admin melalui Telegram. Admin akan segera memproses pesanan Anda.</p>
+    <button class="success-btn" onclick="closeSuccessModal()">Selesai</button>
+  </div>
+  
+  <div class="payment-container">
+    <div class="payment-header">
+      <h1 class="payment-title">Payment Methods</h1>
+      <p class="payment-description">Choose your preferred payment method and upload your payment proof for quick verification.</p>
+    </div>
+    
+    <div class="payment-content">
+      <div class="payment-methods">
+        <h2 class="methods-title">Available Methods</h2>
+        
+        <div class="method-item">
+          <div class="method-icon" style="background: #0081ff;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg" alt="DANA" style="filter: brightness(0) invert(1); width: 35px; height: 35px;">
+          </div>
+          <div class="method-info">
+            <h4>DANA</h4>
+            <p>088297793616</p>
+          </div>
+          <button class="copy-btn" onclick="copyToClipboard('088297793616', this)">
+            <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="Copy">
+            Copy
+          </button>
+        </div>
+        
+        <div class="method-item">
+          <div class="method-icon" style="background: #00AA13;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" alt="GOPAY" style="filter: brightness(0) invert(1); width: 35px; height: 35px;">
+          </div>
+          <div class="method-info">
+            <h4>GOPAY</h4>
+            <p>088297793616</p>
+          </div>
+          <button class="copy-btn" onclick="copyToClipboard('088297793616', this)">
+            <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="Copy">
+            Copy
+          </button>
+        </div>
+      </div>
+      
+      <div class="qr-section">
+        <h2 class="qr-title">QRIS Payment</h2>
+        <div class="qr-code">
+          <img id="qrisImage" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=00020101021226670016COM.NOBUBANK.WWW01189360050300000898240214540226085817856153030360054031005802ID5925AllxdDev-Hosting6007JAKARTA61051234062070703A016304" alt="QRIS Code">
+        </div>
+        <p class="qr-description">Scan this QR code with any e-wallet app that supports QRIS</p>
+        <button class="download-btn" onclick="downloadQRCode()">
+          <img src="https://cdn-icons-png.flaticon.com/512/724/724933.png" alt="Download" width="16" height="16" style="filter: brightness(0) invert(1); margin-right: 8px; vertical-align: middle;">
+          Download QRIS
+        </button>
+      </div>
+      
+      <div class="upload-section">
+        <h2 class="upload-title">Upload Payment Proof</h2>
+        
+        <form class="upload-form" id="paymentForm">
+          <div class="form-group">
+            <label class="form-label">Bukti Transfer *</label>
+            <div class="file-upload">
+              <input type="file" id="paymentProof" accept="image/*" required>
+              <div class="file-upload-label">
+                <img src="https://cdn-icons-png.flaticon.com/512/1665/1665680.png" alt="Upload" class="file-upload-icon">
+                <span>Klik untuk upload screenshot bukti transfer</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="customerName">Nama *</label>
+            <input type="text" id="customerName" class="form-input" placeholder="Masukkan nama lengkap Anda" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="orderDetails">Keterangan *</label>
+            <textarea id="orderDetails" class="form-input form-textarea" placeholder="Contoh: VPS 2GB, Panel 3GB, No. WhatsApp: 088297793616" required></textarea>
+          </div>
+          
+          <button type="submit" class="submit-btn">Kirim Bukti Pembayaran</button>
+        </form>
+        
+        <div class="info-section">
+          <h3 class="info-title">Informasi Penting</h3>
+          <ul class="info-list">
+            <li>Bukti pembayaran akan dikirim langsung ke admin via Telegram</li>
+            <li>Pastikan bukti transfer jelas dan terbaca</li>
+            <li>Sertakan ID transaksi jika ada</li>
+            <li>Verifikasi pembayaran biasanya membutuhkan waktu 1-24 jam</li>
+            <li>Untuk pesanan mendesak, hubungi kami langsung via WhatsApp</li>
+            <li>Simpan bukti pembayaran Anda sampai layanan diterima</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+    <p>&copy; 2025 AllxdDev-Hosting. All rights reserved.</p>
+  </footer>
+  
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const icon = document.getElementById("theme-icon");
+      const current = body.getAttribute("data-theme");
+      
+      if (current === "light") {
+        body.removeAttribute("data-theme");
+        icon.src = "https://cdn-icons-png.flaticon.com/512/1164/1164954.png";
+        localStorage.setItem("theme", "dark");
+      } else {
+        body.setAttribute("data-theme", "light");
+        icon.src = "https://cdn-icons-png.flaticon.com/512/869/869869.png";
+        localStorage.setItem("theme", "light");
+      }
+    }
+    
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "light") {
+      document.body.setAttribute("data-theme", "light");
+      document.getElementById("theme-icon").src = "https://cdn-icons-png.flaticon.com/512/869/869869.png";
+    }
+    
+    // Menu toggle functionality
+    function toggleMenu() {
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+      const menuToggle = document.getElementById("menuToggle");
+      
+      sidebar.classList.toggle("open");
+      overlay.classList.toggle("active");
+      menuToggle.classList.toggle("active");
+    }
+    
+    // Close menu when clicking overlay
+    document.getElementById("overlay").addEventListener("click", function() {
+      document.getElementById("sidebar").classList.remove("open");
+      document.getElementById("overlay").classList.remove("active");
+      document.getElementById("menuToggle").classList.remove("active");
+    });
+    
+    // Robust copy to clipboard functionality with multiple fallback methods
+    function copyToClipboard(text, button) {
+      const originalText = button.innerHTML;
+      
+      // Method 1: Modern Clipboard API
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(function() {
+          showCopySuccess(button, originalText);
+        }).catch(function(err) {
+          console.log('Clipboard API failed, trying fallback method');
+          fallbackCopyMethod(text, button, originalText);
+        });
+      } else {
+        // Method 2: Fallback for older browsers or non-secure contexts
+        fallbackCopyMethod(text, button, originalText);
+      }
+    }
+    
+    // Fallback copy method using hidden input
+    function fallbackCopyMethod(text, button, originalText) {
+      try {
+        const hiddenInput = document.getElementById('hiddenInput');
+        hiddenInput.value = text;
+        hiddenInput.style.position = 'fixed';
+        hiddenInput.style.left = '0';
+        hiddenInput.style.top = '0';
+        hiddenInput.style.opacity = '1';
+        hiddenInput.style.zIndex = '9999';
+        
+        // Focus and select the text
+        hiddenInput.focus();
+        hiddenInput.select();
+        hiddenInput.setSelectionRange(0, 99999); // For mobile devices
+        
+        // Execute copy command
+        const successful = document.execCommand('copy');
+        
+        // Hide the input again
+        hiddenInput.style.position = 'absolute';
+        hiddenInput.style.left = '-9999px';
+        hiddenInput.style.opacity = '0';
+        
+        if (successful) {
+          showCopySuccess(button, originalText);
+        } else {
+          showCopyError(button, originalText);
+        }
+      } catch (err) {
+        console.error('Fallback copy method failed:', err);
+        showCopyError(button, originalText);
+      }
+    }
+    
+    // Show copy success feedback
+    function showCopySuccess(button, originalText) {
+      // Change button text temporarily
+      button.innerHTML = '<img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Copied" style="width: 14px; height: 14px; filter: brightness(0) invert(1);"> Copied!';
+      button.style.background = '#00e676';
+      
+      // Create notification
+      showNotification('Number copied to clipboard!', 'success');
+      
+      // Reset button after 2 seconds
+      setTimeout(() => {
+        button.innerHTML = originalText;
+        button.style.background = 'var(--gradient-primary)';
+      }, 2000);
+    }
+    
+    // Show copy error feedback
+    function showCopyError(button, originalText) {
+      button.innerHTML = '<img src="https://cdn-icons-png.flaticon.com/512/753/753345.png" alt="Error" style="width: 14px; height: 14px; filter: brightness(0) invert(1);"> Error';
+      button.style.background = '#ff5252';
+      
+      // Show manual copy instruction
+      showNotification('Copy failed. Please manually copy: 088297793616', 'error');
+      
+      setTimeout(() => {
+        button.innerHTML = originalText;
+        button.style.background = 'var(--gradient-primary)';
+      }, 3000);
+    }
+    
+    // Show notification
+    function showNotification(message, type) {
+      const notification = document.createElement('div');
+      notification.textContent = message;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#00e676' : '#ff5252'};
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        z-index: 10000;
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        animation: slideInRight 0.3s ease;
+        max-width: 300px;
+        word-wrap: break-word;
+      `;
+      
+      // Add animation keyframes if not already added
+      if (!document.querySelector('#notificationStyles')) {
+        const style = document.createElement('style');
+        style.id = 'notificationStyles';
+        style.textContent = `
+          @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.remove();
+      }, type === 'error' ? 5000 : 3000);
+    }
+    
+    // Download QR code functionality
+    function downloadQRCode() {
+      const qrImage = document.getElementById('qrisImage');
+      
+      // Create a canvas element
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      // Create a new image to draw on canvas
+      const img = new Image();
+      img.crossOrigin = 'Anonymous';
+      
+      img.onload = function() {
+        // Set canvas dimensions to match the image
+        canvas.width = img.width;
+        canvas.height = img.height;
+        
+        // Draw image on canvas
+        ctx.drawImage(img, 0, 0);
+        
+        // Create download link
+        const downloadLink = document.createElement('a');
+        downloadLink.download = 'allxddev-qris-code.png';
+        
+        // Convert canvas to data URL
+        downloadLink.href = canvas.toDataURL('image/png');
+        
+        // Trigger download
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      };
+      
+      // Set source of image to QR code
+      img.src = qrImage.src;
+    }
+    
+    // File upload handling
+    const fileInput = document.getElementById('paymentProof');
+    const fileLabel = document.querySelector('.file-upload-label span');
+    
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        fileLabel.textContent = `Selected: ${file.name}`;
+      } else {
+        fileLabel.textContent = 'Klik untuk upload screenshot bukti transfer';
+      }
+    });
+    
+    // Show loading overlay
+    function showLoading() {
+      document.getElementById('loadingOverlay').classList.add('active');
+    }
+    
+    // Hide loading overlay
+    function hideLoading() {
+      document.getElementById('loadingOverlay').classList.remove('active');
+    }
+    
+    // Show success modal
+    function showSuccessModal() {
+      document.getElementById('successModal').classList.add('active');
+    }
+    
+    // Close success modal
+    function closeSuccessModal() {
+      document.getElementById('successModal').classList.remove('active');
+    }
+    
+    // Send data to Telegram bot
+    async function sendToTelegram(imageFile, name, details) {
+      const botToken = '7529079047:AAFAygSeRYP4DZh4TR9TXlzlYXBxG32cSFk';
+      const chatId = '7995961603';
+      
+      try {
+        // First, send the image
+        const imageFormData = new FormData();
+        imageFormData.append('chat_id', chatId);
+        imageFormData.append('photo', imageFile);
+        imageFormData.append('caption', `🧾 *BUKTI PEMBAYARAN BARU*\n\n*Nama:* ${name}\n*Keterangan:* ${details}\n\n_Dikirim dari website AllxdDev-Hosting_`);
+        imageFormData.append('parse_mode', 'Markdown');
+        
+        const imageResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
+          method: 'POST',
+          body: imageFormData
+        });
+        
+        const imageResult = await imageResponse.json();
+        
+        if (!imageResult.ok) {
+          throw new Error('Failed to send image to Telegram');
+        }
+        
+        return true;
+      } catch (error) {
+        console.error('Error sending to Telegram:', error);
+        return false;
+      }
+    }
+    
+    // Form submission
+    document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Get form data
+      const paymentProof = document.getElementById('paymentProof').files[0];
+      const customerName = document.getElementById('customerName').value;
+      const orderDetails = document.getElementById('orderDetails').value;
+      
+      // Basic validation
+      if (!paymentProof || !customerName || !orderDetails) {
+        alert('Mohon lengkapi semua field yang diperlukan dan upload bukti pembayaran.');
+        return;
+      }
+      
+      // Show loading overlay
+      showLoading();
+      
+      // Send to Telegram
+      const success = await sendToTelegram(paymentProof, customerName, orderDetails);
+      
+      // Hide loading overlay
+      hideLoading();
+      
+      if (success) {
+        // Show success modal
+        showSuccessModal();
+        
+        // Reset form
+        document.getElementById('paymentForm').reset();
+        fileLabel.textContent = 'Klik untuk upload screenshot bukti transfer';
+      } else {
+        // Show error notification
+        showNotification('Gagal mengirim bukti pembayaran. Silakan coba lagi atau hubungi admin via WhatsApp.', 'error');
+      }
+    });
+    
+    // Animate elements on scroll
+    function animateOnScroll() {
+      const elements = document.querySelectorAll('.payment-methods, .qr-section, .upload-section');
+      
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.3;
+        
+        if (elementPosition < screenPosition) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    }
+    
+    // Set initial styles for animation
+    document.querySelectorAll('.payment-methods, .qr-section, .upload-section').forEach(element => {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(20px)';
+      element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    });
+    
+    // Listen for scroll events
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+  </script>
+</body>
+</html>

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - PainziCoder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0f1729;
+      --text-color: #ffffff;
+      --accent-color: #00d9ff;
+      --secondary-color: #1a2236;
+      --card-shadow: 0 10px 30px rgba(0, 217, 255, 0.1);
+      --gradient-primary: linear-gradient(135deg, #00d9ff 0%, #0066ff 100%);
+      --gradient-bg: linear-gradient(135deg, #0f1729 0%, #1a2236 100%);
+      --transition-speed: 0.4s;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --input-bg: rgba(26, 34, 54, 0.8);
+      --success-color: #00e676;
+      --error-color: #ff5252;
+      --menu-active-bg: rgba(0, 217, 255, 0.2);
+      --menu-hover-bg: rgba(0, 217, 255, 0.1);
+    }
+    
+    [data-theme="light"] {
+      --bg-color: #f5f7fa;
+      --text-color: #1a2236;
+      --accent-color: #0066ff;
+      --secondary-color: #ffffff;
+      --card-shadow: 0 10px 30px rgba(0, 102, 255, 0.1);
+      --gradient-primary: linear-gradient(135deg, #0066ff 0%, #5e17eb 100%);
+      --gradient-bg: linear-gradient(135deg, #f5f7fa 0%, #e9ecf2 100%);
+      --border-color: rgba(0, 0, 0, 0.1);
+      --input-bg: rgba(245, 247, 250, 0.8);
+      --success-color: #00c853;
+      --error-color: #d50000;
+      --menu-active-bg: rgba(0, 102, 255, 0.2);
+      --menu-hover-bg: rgba(0, 102, 255, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--gradient-bg);
+      color: var(--text-color);
+      transition: all var(--transition-speed) ease;
+      overflow-x: hidden;
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.5;
+      z-index: -1;
+    }
+    
+    [data-theme="light"] body::before {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230066ff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(15, 23, 41, 0.95);
+      transition: all var(--transition-speed) ease;
+    }
+    
+    [data-theme="light"] header {
+      background-color: rgba(245, 247, 250, 0.95);
+    }
+    
+    .title {
+      font-size: 1.8em;
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 1px;
+      position: relative;
+      transition: all var(--transition-speed) ease;
+    }
+    
+    .title::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: width 0.5s ease;
+    }
+    
+    .title:hover::after {
+      width: 100%;
+    }
+    
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .theme-switch {
+      background: var(--secondary-color);
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .theme-switch:hover {
+      transform: translateY(-3px) rotate(15deg);
+      background: var(--accent-color);
+    }
+    
+    .theme-switch img {
+      width: 22px;
+      height: 22px;
+      transition: transform 0.3s ease;
+    }
+    
+    .menu-toggle {
+      width: 30px;
+      height: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      z-index: 101;
+    }
+    
+    .menu-toggle:hover {
+      transform: scale(1.1);
+    }
+    
+    .menu-toggle span {
+      height: 3px;
+      width: 100%;
+      background: var(--gradient-primary);
+      border-radius: 5px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    
+    .menu-toggle.active span:nth-child(1) {
+      transform: translateY(11px) rotate(45deg);
+    }
+    
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .menu-toggle.active span:nth-child(3) {
+      transform: translateY(-11px) rotate(-45deg);
+    }
+    
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 98;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: var(--secondary-color);
+      padding: 80px 20px 20px;
+      transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+      z-index: 99;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border-left: 1px solid var(--border-color);
+    }
+    
+    .sidebar.open {
+      right: 0;
+    }
+    
+    .sidebar a {
+      display: block;
+      margin: 15px 0;
+      color: var(--accent-color);
+      text-decoration: none;
+      font-size: 1.1em;
+      font-weight: 500;
+      position: relative;
+      padding: 12px 20px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      background-color: transparent;
+    }
+    
+    .sidebar a:hover {
+      background-color: var(--menu-hover-bg);
+      transform: translateX(5px);
+    }
+    
+    .sidebar a:active {
+      background-color: var(--menu-active-bg);
+    }
+    
+    /* About Container */
+    .about-container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 0 20px;
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+      animation-delay: 0.2s;
+    }
+    
+    .about-header {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+    
+    .about-header::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--gradient-primary);
+      border-radius: 3px;
+    }
+    
+    .about-title {
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 15px;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .about-description {
+      font-size: 1.1em;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 40px;
+      align-items: start;
+    }
+    
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .profile-image {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid transparent;
+      background: var(--gradient-primary);
+      padding: 5px;
+      margin-bottom: 20px;
+      transition: transform 0.5s ease;
+      animation: pulse 2s infinite;
+    }
+    
+    .profile-image:hover {
+      transform: scale(1.05);
+    }
+    
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 217, 255, 0.4); }
+      70% { box-shadow: 0 0 0 15px rgba(0, 217, 255, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 217, 255, 0); }
+    }
+    
+    .profile-name {
+      font-size: 1.8em;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--accent-color);
+    }
+    
+    .profile-title {
+      font-size: 1.1em;
+      opacity: 0.8;
+      margin-bottom: 20px;
+    }
+    
+    .profile-social {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+    
+    .social-link:hover {
+      transform: translateY(-5px);
+    }
+    
+    .social-link img {
+      width: 20px;
+      height: 20px;
+      filter: brightness(0) invert(1);
+    }
+    
+    .location {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+    
+    .location img {
+      width: 18px;
+      height: 18px;
+      filter: invert(70%) sepia(59%) saturate(5352%) hue-rotate(171deg) brightness(101%) contrast(101%);
+    }
+    
+    .bio-section {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    .bio-card {
+      background: var(--secondary-color);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .bio-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: var(--gradient-primary);
+      transition: width 0.3s ease;
+    }
+    
+    .bio-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .bio-card:hover::before {
+      width: 10px;
+    }
+    
+    .bio-title {
+      font-size: 1.5em;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--accent-color);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .bio-title::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: width 0.3s ease;
+    }
+    
+    .bio-card:hover .bio-title::after {
+      width: 100%;
+    }
+    
+    .bio-text {
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+    
+    .skills-title {
+      font-size: 1.3em;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--accent-color);
+    }
+    
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 15px;
+    }
+    
+    .skill-item {
+      background: var(--secondary-color);
+      border: 2px solid var(--accent-color);
+      border-radius: 10px;
+      padding: 15px 10px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .skill-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-primary);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 0;
+    }
+    
+    .skill-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .skill-item:hover::before {
+      opacity: 0.1;
+    }
+    
+    .skill-icon {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 10px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .skill-name {
+      font-size: 0.9em;
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .ebook-section {
+      background: var(--secondary-color);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: var(--card-shadow);
+      margin-top: 40px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .ebook-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--gradient-primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    
+    .ebook-section:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .ebook-section:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .ebook-title {
+      font-size: 1.8em;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--accent-color);
+    }
+    
+    .ebook-description {
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+    
+    .ebook-features {
+      margin-bottom: 25px;
+    }
+    
+    .ebook-feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .feature-check {
+      color: var(--accent-color);
+      font-size: 1.2em;
+    }
+    
+    .ebook-price {
+      font-size: 1.5em;
+      font-weight: 600;
+      color: var(--accent-color);
+      margin-bottom: 20px;
+    }
+    
+    .ebook-btn {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 12px 25px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .ebook-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .ebook-btn img {
+      width: 20px;
+      height: 20px;
+      filter: brightness(0) invert(1);
+    }
+    
+    /* Footer */
+    .footer {
+      margin-top: 50px;
+      padding: 30px 0;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+    
+    .footer a {
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Responsive design */
+    @media (max-width: 900px) {
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .profile-section {
+        margin-bottom: 30px;
+      }
+      
+      .about-container {
+        padding: 15px;
+      }
+      
+      .about-title {
+        font-size: 2em;
+      }
+      
+      header {
+        padding: 15px 20px;
+      }
+      
+      .sidebar {
+        width: 250px;
+      }
+      
+      .skills-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="overlay"></div>
+  
+  <header>
+    <div class="title">Painzi Offcial</div>
+    <div class="controls">
+      <button class="theme-switch" onclick="toggleTheme()" aria-label="Toggle theme">
+        <img id="theme-icon" src="https://cdn-icons-png.flaticon.com/512/1164/1164954.png" alt="Theme" />
+      </button>
+      <div class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  
+  <div class="sidebar" id="sidebar">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Me</a>
+    <a href="shop.html">Shop</a>
+    <a href="payment.html">Payment</a>
+    <a href="ai.html">Tanya Staries</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  
+  <div class="about-container">
+    <div class="about-header">
+      <h1 class="about-title">About Me</h1>
+      <p class="about-description">Get to know more about who I am and what I do</p>
+    </div>
+    
+    <div class="about-content">
+      <div class="profile-section">
+        <img src="https://files.catbox.moe/l37ldc.jpg" alt="AllxdDev Profile" class="profile-image">
+        <h2 class="profile-name">AllxdDev</h2>
+        <p class="profile-title">Digital Product Developer & Bot Specialist</p>
+        
+        <div class="profile-social">
+          <a href="https://t.me/allxddev" class="social-link" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">
+          </a>
+          <a href="https://wa.me/6288297793616" class="social-link" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384055.png" alt="WhatsApp">
+          </a>
+          <a href="https://github.com/AllxdDev-Hosting" class="social-link" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub">
+          </a>
+        </div>
+        
+        <div class="location">
+          <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="Location">
+          <span>Tangerang, Banten - 18 Tahun</span>
+        </div>
+      </div>
+      
+      <div class="bio-section">
+        <div class="bio-card">
+          <h3 class="bio-title">Who I Am</h3>
+          <p class="bio-text">Halo, aku adalah AllxdDev-Hosting! Seorang penjual digital online yang menyediakan kebutuhan bot, jasa pemrograman, dan produk digital lainnya. Aku juga seorang developer bot WhatsApp dengan pengalaman di berbagai bahasa seperti JavaScript, HTML, CSS, dan Python.</p>
+          <p class="bio-text">Aku paham logika pemrograman dan siap bantu kamu buat solusi digital! Dengan pengalaman yang aku miliki, aku bisa membantu kamu membuat berbagai jenis bot, website, dan aplikasi sesuai kebutuhan.</p>
+          
+          <h4 class="skills-title">Skills & Technologies</h4>
+          <div class="skills-grid">
+            <div class="skill-item">
+              <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JavaScript" class="skill-icon">
+              <span class="skill-name">JavaScript</span>
+            </div>
+            <div class="skill-item">
+              <img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Python" class="skill-icon">
+              <span class="skill-name">Python</span>
+            </div>
+            <div class="skill-item">
+              <img src="https://cdn-icons-png.flaticon.com/512/5968/5968267.png" alt="HTML" class="skill-icon">
+              <span class="skill-name">HTML</span>
+            </div>
+            <div class="skill-item">
+              <img src="https://cdn-icons-png.flaticon.com/512/5968/5968242.png" alt="CSS" class="skill-icon">
+              <span class="skill-name">CSS</span>
+            </div>
+            <div class="skill-item">
+              <img src="https://cdn-icons-png.flaticon.com/512/5968/5968322.png" alt="Node.js" class="skill-icon">
+              <span class="skill-name">Node.js</span>
+            </div>
+            <div class="skill-item">
+              <img src="https://cdn-icons-png.flaticon.com/512/5968/5968672.png" alt="Bootstrap" class="skill-icon">
+              <span class="skill-name">Bootstrap</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bio-card">
+          <h3 class="bio-title">What I Do</h3>
+          <p class="bio-text">Aku menyediakan berbagai layanan digital yang dapat membantu kamu dalam mengembangkan bisnis atau proyek pribadi. Berikut adalah beberapa layanan yang aku tawarkan:</p>
+          
+          <ul style="margin-left: 20px; margin-bottom: 20px;">
+            <li>Pengembangan Bot WhatsApp dengan fitur lengkap</li>
+            <li>Penyediaan VPS berkualitas tinggi dengan harga terjangkau</li>
+            <li>Panel Pterodactyl untuk manajemen server game</li>
+            <li>Pengembangan website dan aplikasi web</li>
+            <li>Jasa pembuatan script khusus sesuai kebutuhan</li>
+            <li>Konsultasi dan bantuan teknis untuk proyek digital</li>
+          </ul>
+          
+          <p class="bio-text">Semua layanan yang aku tawarkan dilengkapi dengan dukungan teknis yang responsif. Aku selalu berusaha memberikan solusi terbaik untuk setiap kebutuhan klien.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="ebook-section">
+      <h3 class="ebook-title">E-Book JavaScript Bot WhatsApp</h3>
+      <p class="ebook-description">Belajar bikin bot WhatsApp dengan JavaScript. Panduan lengkap dari dasar hingga mahir, cocok untuk pemula yang ingin memulai perjalanan coding mereka!</p>
+      
+      <div class="ebook-features">
+        <div class="ebook-feature">
+          <span class="feature-check">✓</span>
+          <span>Pengenalan dasar JavaScript untuk pemula</span>
+        </div>
+        <div class="ebook-feature">
+          <span class="feature-check">✓</span>
+          <span>Tutorial step-by-step membuat bot WhatsApp</span>
+        </div>
+        <div class="ebook-feature">
+          <span class="feature-check">✓</span>
+          <span>Implementasi fitur-fitur bot yang populer</span>
+        </div>
+        <div class="ebook-feature">
+          <span class="feature-check">✓</span>
+          <span>Tips dan trik optimasi performa bot</span>
+        </div>
+        <div class="ebook-feature">
+          <span class="feature-check">✓</span>
+          <span>Akses ke grup diskusi eksklusif</span>
+        </div>
+      </div>
+      
+      <div class="ebook-price">Harga: Rp10.000</div>
+      
+      <a href="https://t.me/allxddev?text=Halo%20bang%2C%20saya%20mau%20beli%20E-Book%20JavaScript%20Bot%20WhatsApp" class="ebook-btn" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">
+        Beli via Telegram
+      </a>
+    </div>
+  </div>
+  
+  <footer class="footer">
+    <p>&copy; 2025 Painzi Official. All rights reserved.</p>
+  </footer>
+  
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const icon = document.getElementById("theme-icon");
+      const current = body.getAttribute("data-theme");
+      
+      if (current === "light") {
+        body.removeAttribute("data-theme");
+        icon.src = "https://cdn-icons-png.flaticon.com/512/1164/1164954.png";
+        localStorage.setItem("theme", "dark");
+      } else {
+        body.setAttribute("data-theme", "light");
+        icon.src = "https://cdn-icons-png.flaticon.com/512/869/869869.png";
+        localStorage.setItem("theme", "light");
+      }
+    }
+    
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "light") {
+      document.body.setAttribute("data-theme", "light");
+      document.getElementById("theme-icon").src = "https://cdn-icons-png.flaticon.com/512/869/869869.png";
+    }
+    
+    // Menu toggle functionality
+    function toggleMenu() {
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+      const menuToggle = document.getElementById("menuToggle");
+      
+      sidebar.classList.toggle("open");
+      overlay.classList.toggle("active");
+      menuToggle.classList.toggle("active");
+    }
+    
+    // Close menu when clicking overlay
+    document.getElementById("overlay").addEventListener("click", function() {
+      document.getElementById("sidebar").classList.remove("open");
+      document.getElementById("overlay").classList.remove("active");
+      document.getElementById("menuToggle").classList.remove("active");
+    });
+    
+    // Animate elements on scroll
+    function animateOnScroll() {
+      const elements = document.querySelectorAll('.bio-card, .ebook-section');
+      
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.3;
+        
+        if (elementPosition < screenPosition) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    }
+    
+    // Set initial styles for animation
+    document.querySelectorAll('.bio-card, .ebook-section').forEach(element => {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(20px)';
+      element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    });
+    
+    // Listen for scroll events
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+  </script>
+</body>
+</html>

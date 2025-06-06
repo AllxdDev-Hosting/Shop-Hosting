@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home - AllxdDev-Hosting</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0f1729;
+      --text-color: #ffffff;
+      --accent-color: #00d9ff;
+      --secondary-color: #1a2236;
+      --card-shadow: 0 10px 30px rgba(0, 217, 255, 0.1);
+      --gradient-primary: linear-gradient(135deg, #00d9ff 0%, #0066ff 100%);
+      --gradient-bg: linear-gradient(135deg, #0f1729 0%, #1a2236 100%);
+      --transition-speed: 0.4s;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --input-bg: rgba(26, 34, 54, 0.8);
+      --success-color: #00e676;
+      --error-color: #ff5252;
+      --menu-active-bg: rgba(0, 217, 255, 0.2);
+      --menu-hover-bg: rgba(0, 217, 255, 0.1);
+    }
+    
+    [data-theme="light"] {
+      --bg-color: #f5f7fa;
+      --text-color: #1a2236;
+      --accent-color: #0066ff;
+      --secondary-color: #ffffff;
+      --card-shadow: 0 10px 30px rgba(0, 102, 255, 0.1);
+      --gradient-primary: linear-gradient(135deg, #0066ff 0%, #5e17eb 100%);
+      --gradient-bg: linear-gradient(135deg, #f5f7fa 0%, #e9ecf2 100%);
+      --border-color: rgba(0, 0, 0, 0.1);
+      --input-bg: rgba(245, 247, 250, 0.8);
+      --success-color: #00c853;
+      --error-color: #d50000;
+      --menu-active-bg: rgba(0, 102, 255, 0.2);
+      --menu-hover-bg: rgba(0, 102, 255, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--gradient-bg);
+      color: var(--text-color);
+      transition: all var(--transition-speed) ease;
+      overflow-x: hidden;
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.5;
+      z-index: -1;
+    }
+    
+    [data-theme="light"] body::before {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230066ff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(15, 23, 41, 0.95);
+      transition: all var(--transition-speed) ease;
+    }
+    
+    [data-theme="light"] header {
+      background-color: rgba(245, 247, 250, 0.95);
+    }
+    
+    .title {
+      font-size: 1.8em;
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 1px;
+      position: relative;
+      transition: all var(--transition-speed) ease;
+    }
+    
+    .title::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: width 0.5s ease;
+    }
+    
+    .title:hover::after {
+      width: 100%;
+    }
+    
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .theme-switch {
+      background: var(--secondary-color);
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .theme-switch:hover {
+      transform: translateY(-3px) rotate(15deg);
+      background: var(--accent-color);
+    }
+    
+    .theme-switch img {
+      width: 22px;
+      height: 22px;
+      transition: transform 0.3s ease;
+    }
+    
+    .menu-toggle {
+      width: 30px;
+      height: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      z-index: 101;
+    }
+    
+    .menu-toggle:hover {
+      transform: scale(1.1);
+    }
+    
+    .menu-toggle span {
+      height: 3px;
+      width: 100%;
+      background: var(--gradient-primary);
+      border-radius: 5px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    
+    .menu-toggle.active span:nth-child(1) {
+      transform: translateY(11px) rotate(45deg);
+    }
+    
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .menu-toggle.active span:nth-child(3) {
+      transform: translateY(-11px) rotate(-45deg);
+    }
+    
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 98;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: var(--secondary-color);
+      padding: 80px 20px 20px;
+      transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+      z-index: 99;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border-left: 1px solid var(--border-color);
+    }
+    
+    .sidebar.open {
+      right: 0;
+    }
+    
+    .sidebar a {
+      display: block;
+      margin: 15px 0;
+      color: var(--accent-color);
+      text-decoration: none;
+      font-size: 1.1em;
+      font-weight: 500;
+      position: relative;
+      padding: 12px 20px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      background-color: transparent;
+    }
+    
+    .sidebar a:hover {
+      background-color: var(--menu-hover-bg);
+      transform: translateX(5px);
+    }
+    
+    .sidebar a:active {
+      background-color: var(--menu-active-bg);
+    }
+    
+    /* Hero Section */
+    .hero-container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 0 20px;
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+      animation-delay: 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .hero-title {
+      font-size: 3em;
+      font-weight: 700;
+      margin-bottom: 20px;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.2em;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .cta-btn {
+      padding: 15px 30px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1.1em;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .primary-btn {
+      background: var(--gradient-primary);
+      color: white;
+      box-shadow: 0 10px 20px rgba(0, 217, 255, 0.2);
+    }
+    
+    .primary-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 217, 255, 0.3);
+    }
+    
+    .secondary-btn {
+      background: transparent;
+      color: var(--accent-color);
+      border: 2px solid var(--accent-color);
+    }
+    
+    .secondary-btn:hover {
+      background: rgba(0, 217, 255, 0.1);
+      transform: translateY(-5px);
+    }
+    
+    /* Features Section */
+    .features-container {
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 0 20px;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 50px;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-primary);
+      border-radius: 3px;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    
+    .feature-card {
+      background: var(--secondary-color);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--gradient-primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .feature-icon {
+      width: 70px;
+      height: 70px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+    }
+    
+    .feature-card:hover .feature-icon {
+      transform: scale(1.1) rotate(10deg);
+    }
+    
+    .feature-icon img {
+      width: 35px;
+      height: 35px;
+      filter: brightness(0) invert(1);
+    }
+    
+    .feature-title {
+      font-size: 1.5em;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--accent-color);
+    }
+    
+    .feature-description {
+      font-size: 1em;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+    
+    .feature-link {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: auto;
+      transition: transform 0.3s ease;
+    }
+    
+    .feature-link:hover {
+      transform: translateX(5px);
+    }
+    
+    /* Testimonials Section */
+    .testimonials-container {
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 0 20px;
+    }
+    
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    
+    .testimonial-card {
+      background: var(--secondary-color);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+    
+    .testimonial-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .quote-icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 4em;
+      opacity: 0.1;
+      color: var(--accent-color);
+    }
+    
+    .testimonial-text {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      line-height: 1.7;
+      font-style: italic;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent-color);
+    }
+    
+    .author-info h4 {
+      font-size: 1.1em;
+      margin-bottom: 5px;
+      color: var(--accent-color);
+    }
+    
+    .author-info p {
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+      max-width: 1000px;
+      margin: 100px auto;
+      padding: 50px 30px;
+      background: var(--secondary-color);
+      border-radius: 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-primary);
+      opacity: 0.05;
+      z-index: 0;
+    }
+    
+    .cta-content {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .cta-title {
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 20px;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .cta-description {
+      font-size: 1.2em;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      opacity: 0.9;
+    }
+    
+    /* Footer */
+    .footer {
+      background: var(--secondary-color);
+      padding: 50px 0 20px;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+    }
+    
+    .footer-logo {
+      font-size: 1.8em;
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 15px;
+      display: inline-block;
+    }
+    
+    .footer-description {
+      margin-bottom: 20px;
+      opacity: 0.8;
+      line-height: 1.7;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+    
+    .social-link:hover {
+      transform: translateY(-5px);
+    }
+    
+    .social-link img {
+      width: 20px;
+      height: 20px;
+      filter: brightness(0) invert(1);
+    }
+    
+    .footer-title {
+      font-size: 1.3em;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--accent-color);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .footer-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--gradient-primary);
+      border-radius: 3px;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+    
+    .footer-links a {
+      color: var(--text-color);
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.3s ease;
+      display: inline-block;
+    }
+    
+    .footer-links a:hover {
+      color: var(--accent-color);
+      transform: translateX(5px);
+    }
+    
+    .contact-info {
+      list-style: none;
+    }
+    
+    .contact-info li {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .contact-info img {
+      width: 20px;
+      height: 20px;
+      filter: invert(70%) sepia(59%) saturate(5352%) hue-rotate(171deg) brightness(101%) contrast(101%);
+    }
+    
+    .copyright {
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 40px;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.9em;
+      opacity: 0.7;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Responsive design */
+    @media (max-width: 900px) {
+      .hero-title {
+        font-size: 2.5em;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.1em;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+      
+      .cta-btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+      }
+      
+      .features-grid, .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .section-title {
+        font-size: 2em;
+      }
+      
+      .cta-title {
+        font-size: 2em;
+      }
+      
+      header {
+        padding: 15px 20px;
+      }
+      
+      .sidebar {
+        width: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="overlay"></div>
+  
+  <header>
+    <div class="title">AllxdDev-Hosting</div>
+    <div class="controls">
+      <button class="theme-switch" onclick="toggleTheme()" aria-label="Toggle theme">
+        <img id="theme-icon" src="https://cdn-icons-png.flaticon.com/512/1164/1164954.png" alt="Theme" />
+      </button>
+      <div class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  
+  <div class="sidebar" id="sidebar">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Me</a>
+    <a href="shop.html">Shop</a>
+    <a href="payment.html">Payment</a>
+    <a href="ai.html">Tanya Staries</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  
+  <div class="hero-container">
+    <h1 class="hero-title">Welcome to AllxdDev-Hosting</h1>
+    <p class="hero-subtitle">Your one-stop solution for digital products, VPS hosting, Pterodactyl panels, and custom development services. Quality products at affordable prices.</p>
+    
+    <div class="cta-buttons">
+      <a href="shop.html" class="cta-btn primary-btn">
+        <img src="https://cdn-icons-png.flaticon.com/512/3144/3144456.png" alt="Shop" width="24" height="24" style="filter: brightness(0) invert(1);">
+        Explore Products
+      </a>
+      <a href="contact.html" class="cta-btn secondary-btn">
+        <img src="https://cdn-icons-png.flaticon.com/512/2343/2343694.png" alt="Contact" width="24" height="24" style="filter: invert(70%) sepia(59%) saturate(5352%) hue-rotate(171deg) brightness(101%) contrast(101%);">
+        Contact Us
+      </a>
+    </div>
+  </div>
+  
+  <div class="features-container">
+    <h2 class="section-title">Our Services</h2>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/1383/1383395.png" alt="VPS">
+        </div>
+        <h3 class="feature-title">VPS Hosting</h3>
+        <p class="feature-description">High-performance VPS with SSD storage, guaranteed uptime, and excellent support. Perfect for hosting websites, bots, and game servers.</p>
+        <a href="shop.html" class="feature-link">View Plans →</a>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/2621/2621303.png" alt="Panel">
+        </div>
+        <h3 class="feature-title">Pterodactyl Panels</h3>
+        <p class="feature-description">Easy-to-use game server management panels with various RAM allocations. Control your game servers with a user-friendly interface.</p>
+        <a href="shop.html" class="feature-link">Explore Panels →</a>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/1688/1688400.png" alt="Development">
+        </div>
+        <h3 class="feature-title">Custom Development</h3>
+        <p class="feature-description">Custom script development services including WhatsApp bots, web panels, and more. Tailored solutions for your specific needs.</p>
+        <a href="contact.html" class="feature-link">Request a Quote →</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="testimonials-container">
+    <h2 class="section-title">What Our Clients Say</h2>
+    
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="quote-icon">"</div>
+        <p class="testimonial-text">The VPS service is incredibly reliable and the customer support is top-notch. I've been using it for my Minecraft server and couldn't be happier!</p>
+        <div class="testimonial-author">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Author" class="author-avatar">
+          <div class="author-info">
+            <h4>Ahmad Rizky</h4>
+            <p>Game Server Owner</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="quote-icon">"</div>
+        <p class="testimonial-text">The Pterodactyl panel made managing my game servers so much easier. The interface is intuitive and the performance is excellent. Highly recommended!</p>
+        <div class="testimonial-author">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Author" class="author-avatar">
+          <div class="author-info">
+            <h4>Siti Nurhaliza</h4>
+            <p>FiveM Server Admin</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="quote-icon">"</div>
+        <p class="testimonial-text">AllxdDev-Hosting developed a custom WhatsApp bot for my business that has significantly improved our customer service. The quality of work and attention to detail is impressive.</p>
+        <div class="testimonial-author">
+          <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Author" class="author-avatar">
+          <div class="author-info">
+            <h4>Budi Santoso</h4>
+            <p>Business Owner</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="cta-section">
+    <div class="cta-content">
+      <h2 class="cta-title">Ready to Get Started?</h2>
+      <p class="cta-description">Browse our products or contact us for custom solutions. We're here to help you succeed with reliable digital services.</p>
+      <div class="cta-buttons">
+        <a href="shop.html" class="cta-btn primary-btn">
+          Shop Now
+        </a>
+        <a href="contact.html" class="cta-btn secondary-btn">
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <div class="footer-logo">AllxdDev-Hosting</div>
+        <p class="footer-description">Providing quality digital products and services at affordable prices. Your satisfaction is our priority.</p>
+        <div class="social-links">
+          <a href="https://t.me/allxddev" class="social-link" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">
+          </a>
+          <a href="https://wa.me/6288297793616" class="social-link" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384055.png" alt="WhatsApp">
+          </a>
+          <a href="https://github.com/AllxdDev-Hosting" class="social-link" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub">
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <h3 class="footer-title">Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Me</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="payment.html">Payment</a></li>
+          <li><a href="ai.html">Tanya Staries</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="footer-title">Products</h3>
+        <ul class="footer-links">
+          <li><a href="shop.html">VPS Hosting</a></li>
+          <li><a href="shop.html">Pterodactyl Panels</a></li>
+          <li><a href="shop.html">WhatsApp Bots</a></li>
+          <li><a href="shop.html">Custom Scripts</a></li>
+          <li><a href="shop.html">Web Development</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="footer-title">Contact Info</h3>
+        <ul class="contact-info">
+          <li>
+            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384055.png" alt="WhatsApp">
+            <span>+62 858-1785-6153</span>
+          </li>
+          <li>
+            <img src="https://cdn-icons-png.flaticon.com/512/542/542638.png" alt="Email">
+            <span>allxddev@gmail.com</span>
+          </li>
+          <li>
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">
+            <span>@allxddev</span>
+          </li>
+          <li>
+            <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="Location">
+            <span>Tangerang, Banten</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      <p>&copy; 2025 AllxdDev-Hosting. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const icon = document.getElementById("theme-icon");
+      const current = body.getAttribute("data-theme");
+      
+      if (current === "light") {
+        body.removeAttribute("data-theme");
+        icon.src = "https://cdn-icons-png.flaticon.com/512/1164/1164954.png";
+        localStorage.setItem("theme", "dark");
+      } else {
+        body.setAttribute("data-theme", "light");
+        icon.src = "https://cdn-icons-png.flaticon.com/512/869/869869.png";
+        localStorage.setItem("theme", "light");
+      }
+    }
+    
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "light") {
+      document.body.setAttribute("data-theme", "light");
+      document.getElementById("theme-icon").src = "https://cdn-icons-png.flaticon.com/512/869/869869.png";
+    }
+    
+    // Menu toggle functionality
+    function toggleMenu() {
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+      const menuToggle = document.getElementById("menuToggle");
+      
+      sidebar.classList.toggle("open");
+      overlay.classList.toggle("active");
+      menuToggle.classList.toggle("active");
+    }
+    
+    // Close menu when clicking overlay
+    document.getElementById("overlay").addEventListener("click", function() {
+      document.getElementById("sidebar").classList.remove("open");
+      document.getElementById("overlay").classList.remove("active");
+      document.getElementById("menuToggle").classList.remove("active");
+    });
+    
+    // Animate elements on scroll
+    function animateOnScroll() {
+      const elements = document.querySelectorAll('.feature-card, .testimonial-card, .cta-section');
+      
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.3;
+        
+        if (elementPosition < screenPosition) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    }
+    
+    // Set initial styles for animation
+    document.querySelectorAll('.feature-card, .testimonial-card, .cta-section').forEach(element => {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(20px)';
+      element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    });
+    
+    // Listen for scroll events
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+  </script>
+</body>
+</html>

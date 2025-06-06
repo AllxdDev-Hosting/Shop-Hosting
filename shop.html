@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop - AllxdDev-Hosting</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0f1729;
+      --text-color: #ffffff;
+      --accent-color: #00d9ff;
+      --secondary-color: #1a2236;
+      --card-shadow: 0 10px 30px rgba(0, 217, 255, 0.1);
+      --gradient-primary: linear-gradient(135deg, #00d9ff 0%, #0066ff 100%);
+      --gradient-bg: linear-gradient(135deg, #0f1729 0%, #1a2236 100%);
+      --transition-speed: 0.4s;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --input-bg: rgba(26, 34, 54, 0.8);
+      --success-color: #00e676;
+      --error-color: #ff5252;
+      --menu-active-bg: rgba(0, 217, 255, 0.2);
+      --menu-hover-bg: rgba(0, 217, 255, 0.1);
+      --vps-color: rgba(0, 217, 255, 0.1);
+      --panel-color: rgba(0, 170, 255, 0.1);
+      --service-color: rgba(0, 140, 255, 0.1);
+    }
+    
+    [data-theme="light"] {
+      --bg-color: #f5f7fa;
+      --text-color: #1a2236;
+      --accent-color: #0066ff;
+      --secondary-color: #ffffff;
+      --card-shadow: 0 10px 30px rgba(0, 102, 255, 0.1);
+      --gradient-primary: linear-gradient(135deg, #0066ff 0%, #5e17eb 100%);
+      --gradient-bg: linear-gradient(135deg, #f5f7fa 0%, #e9ecf2 100%);
+      --border-color: rgba(0, 0, 0, 0.1);
+      --input-bg: rgba(245, 247, 250, 0.8);
+      --success-color: #00c853;
+      --error-color: #d50000;
+      --menu-active-bg: rgba(0, 102, 255, 0.2);
+      --menu-hover-bg: rgba(0, 102, 255, 0.1);
+      --vps-color: rgba(0, 102, 255, 0.05);
+      --panel-color: rgba(94, 23, 235, 0.05);
+      --service-color: rgba(0, 102, 255, 0.05);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--gradient-bg);
+      color: var(--text-color);
+      transition: all var(--transition-speed) ease;
+      overflow-x: hidden;
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.5;
+      z-index: -1;
+    }
+    
+    [data-theme="light"] body::before {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230066ff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(15, 23, 41, 0.95);
+      transition: all var(--transition-speed) ease;
+    }
+    
+    [data-theme="light"] header {
+      background-color: rgba(245, 247, 250, 0.95);
+    }
+    
+    .title {
+      font-size: 1.8em;
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 1px;
+      position: relative;
+      transition: all var(--transition-speed) ease;
+    }
+    
+    .title::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: width 0.5s ease;
+    }
+    
+    .title:hover::after {
+      width: 100%;
+    }
+    
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .theme-switch {
+      background: var(--secondary-color);
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .theme-switch:hover {
+      transform: translateY(-3px) rotate(15deg);
+      background: var(--accent-color);
+    }
+    
+    .theme-switch img {
+      width: 22px;
+      height: 22px;
+      transition: transform 0.3s ease;
+    }
+    
+    .menu-toggle {
+      width: 30px;
+      height: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      z-index: 101;
+    }
+    
+    .menu-toggle:hover {
+      transform: scale(1.1);
+    }
+    
+    .menu-toggle span {
+      height: 3px;
+      width: 100%;
+      background: var(--gradient-primary);
+      border-radius: 5px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    
+    .menu-toggle.active span:nth-child(1) {
+      transform: translateY(11px) rotate(45deg);
+    }
+    
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .menu-toggle.active span:nth-child(3) {
+      transform: translateY(-11px) rotate(-45deg);
+    }
+    
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 98;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: var(--secondary-color);
+      padding: 80px 20px 20px;
+      transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+      z-index: 99;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border-left: 1px solid var(--border-color);
+    }
+    
+    .sidebar.open {
+      right: 0;
+    }
+    
+    .sidebar a {
+      display: block;
+      margin: 15px 0;
+      color: var(--accent-color);
+      text-decoration: none;
+      font-size: 1.1em;
+      font-weight: 500;
+      position: relative;
+      padding: 12px 20px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      background-color: transparent;
+    }
+    
+    .sidebar a:hover {
+      background-color: var(--menu-hover-bg);
+      transform: translateX(5px);
+    }
+    
+    .sidebar a:active {
+      background-color: var(--menu-active-bg);
+    }
+    
+    /* Shop Container */
+    .shop-container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 0 20px;
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+      animation-delay: 0.2s;
+    }
+    
+    .shop-header {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+    
+    .shop-header::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--gradient-primary);
+      border-radius: 3px;
+    }
+    
+    .shop-title {
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 15px;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .shop-description {
+      font-size: 1.1em;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .category-filter {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    
+    .category-btn {
+      padding: 10px 20px;
+      background: var(--secondary-color);
+      border: none;
+      border-radius: 30px;
+      color: var(--text-color);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .category-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .category-btn.active {
+      background: var(--gradient-primary);
+      color: white;
+    }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    
+    .product-card {
+      background: var(--secondary-color);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: var(--gradient-primary);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.3s ease;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .product-card:hover::before {
+      transform: scaleY(1);
+    }
+    
+    .product-category {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.7em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      z-index: 1;
+    }
+    
+    .product-category.vps {
+      background: var(--vps-color);
+      color: var(--accent-color);
+    }
+    
+    .product-category.panel {
+      background: var(--panel-color);
+      color: var(--accent-color);
+    }
+    
+    .product-category.service {
+      background: var(--service-color);
+      color: var(--accent-color);
+    }
+    
+    .product-content {
+      padding: 25px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .product-title {
+      font-size: 1.5em;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--accent-color);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .product-title::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: width 0.3s ease;
+    }
+    
+    .product-card:hover .product-title::after {
+      width: 100%;
+    }
+    
+    .product-description {
+      margin-bottom: 20px;
+      line-height: 1.7;
+      flex-grow: 1;
+    }
+    
+    .product-price {
+      font-size: 1.3em;
+      font-weight: 600;
+      color: var(--accent-color);
+      margin-bottom: 20px;
+    }
+    
+    .product-btn {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 12px 25px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      align-self: flex-start;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .product-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .product-btn img {
+      width: 20px;
+      height: 20px;
+      filter: brightness(0) invert(1);
+    }
+    
+    /* Footer */
+    .footer {
+      margin-top: 50px;
+      padding: 30px 0;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+    
+    .footer a {
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Responsive design */
+    @media (max-width: 900px) {
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+      
+      .shop-container {
+        padding: 15px;
+      }
+      
+      .shop-title {
+        font-size: 2em;
+      }
+      
+      header {
+        padding: 15px 20px;
+      }
+      
+      .sidebar {
+        width: 250px;
+      }
+      
+      .category-filter {
+        gap: 10px;
+      }
+      
+      .category-btn {
+        padding: 8px 15px;
+        font-size: 0.9em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="overlay"></div>
+  
+  <header>
+    <div class="title">AllxdDev-Hosting</div>
+    <div class="controls">
+      <button class="theme-switch" onclick="toggleTheme()" aria-label="Toggle theme">
+        <img id="theme-icon" src="https://cdn-icons-png.flaticon.com/512/1164/1164954.png" alt="Theme" />
+      </button>
+      <div class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  
+  <div class="sidebar" id="sidebar">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Me</a>
+    <a href="shop.html">Shop</a>
+    <a href="payment.html">Payment</a>
+    <a href="ai.html">Tanya Staries</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  
+  <div class="shop-container">
+    <div class="shop-header">
+      <h1 class="shop-title">Our Products</h1>
+      <p class="shop-description">Explore our range of digital products and services designed to help you succeed online.</p>
+    </div>
+    
+    <div class="category-filter">
+      <button class="category-btn active" data-category="all">All Products</button>
+      <button class="category-btn" data-category="vps">VPS</button>
+      <button class="category-btn" data-category="panel">Panel</button>
+      <button class="category-btn" data-category="service">Services</button>
+    </div>
+    
+    <div class="products-grid">
+      <!-- VPS Products -->
+      <div class="product-card" data-category="vps">
+        <span class="product-category vps">VPS</span>
+        <div class="product-content">
+          <h3 class="product-title">Ram 2GB Core 2</h3>
+          <p class="product-description">Digital Ocean High Quality VPS with SSD storage and high performance. Perfect for small websites and applications.</p>
+          <div class="product-price">Rp20.000/month</div>
+          <a href="https://t.me/ortukloe?text=Halo%20kak,%20aku%20mau%20order%20VPS%202GB%20Core%202" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+      
+      <div class="product-card" data-category="vps">
+        <span class="product-category vps">VPS</span>
+        <div class="product-content">
+          <h3 class="product-title">Ram 4GB Core 2</h3>
+          <p class="product-description">Digital Ocean High Quality VPS with SSD storage and high performance. Ideal for medium-sized websites and applications.</p>
+          <div class="product-price">Rp35.000/month</div>
+          <a href="https://t.me/ortukloe?text=Halo%20kak,%20aku%20mau%20order%20VPS%204GB%20Core%202" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+      
+      <div class="product-card" data-category="vps">
+        <span class="product-category vps">VPS</span>
+        <div class="product-content">
+          <h3 class="product-title">Ram 8GB Core 2</h3>
+          <p class="product-description">Digital Ocean High Quality VPS with SSD storage and high performance. Perfect for larger websites and applications.</p>
+          <div class="product-price">Rp45.000/month</div>
+          <a href="https://t.me/ortukloe?text=Halo%20kak,%20aku%20mau%20order%20VPS%208GB%20Core%202" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+      
+      <div class="product-card" data-category="vps">
+        <span class="product-category vps">VPS</span>
+        <div class="product-content">
+          <h3 class="product-title">Ram 8GB Core 4</h3>
+          <p class="product-description">Digital Ocean High Quality VPS with SSD storage and high performance. Ideal for resource-intensive applications.</p>
+          <div class="product-price">Rp50.000/month</div>
+          <a href="https://t.me/ortukloe?text=Halo%20kak,%20aku%20mau%20order%20VPS%208GB%20Core%204" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+      
+      <div class="product-card" data-category="vps">
+        <span class="product-category vps">VPS</span>
+        <div class="product-content">
+          <h3 class="product-title">Ram 16GB Core 4</h3>
+          <p class="product-description">Digital Ocean High Quality VPS with SSD storage and high performance. Perfect for high-traffic websites and applications.</p>
+          <div class="product-price">Rp60.000/month</div>
+          <a href="https://t.me/ortukloe?text=Halo%20kak,%20aku%20mau%20order%20VPS%2016GB%20Core%204" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+      
+      <!-- Panel Products -->
+      <div class="product-card" data-category="panel">
+        <span class="product-category panel">Panel</span>
+        <div class="product-content">
+          <h3 class="product-title">Panel 1GB</h3>
+          <p class="product-description">Pterodactyl Panel with 1GB RAM allocation for your game servers. Perfect for small game servers and testing.</p>
+          <div class="product-price">Rp1.000/month</div>
+          <a href="https://t.me/ortukloe?text=Halo,%20aku%20mau%20order%20Panel%201GB" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+      
+      <div class="product-card" data-category="panel">
+        <span class="product-category panel">Panel</span>
+        <div class="product-content">
+          <h3 class="product-title">Panel 2GB</h3>
+          <p class="product-description">Pterodactyl Panel with 2GB RAM allocation for your game servers. Ideal for small to medium game servers.</p>
+          <div class="product-price">Rp2.000/month</div>
+          <a href="https://t.me/ortukloe?text=Halo,%20aku%20mau%20order%20Panel%202GB" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+      
+      <div class="product-card" data-category="panel">
+        <span class="product-category panel">Panel</span>
+        <div class="product-content">
+          <h3 class="product-title">Panel 3GB</h3>
+          <p class="product-description">Pterodactyl Panel with 3GB RAM allocation for your game servers. Perfect for medium-sized game servers.</p>
+          <div class="product-price">Rp3.000/month</div>
+          <a href="https://t.me/ortukloe?text=Halo,%20aku%20mau%20order%20Panel%203GB" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+      
+      <div class="product-card" data-category="panel">
+        <span class="product-category panel">Panel</span>
+        <div class="product-content">
+          <h3 class="product-title">Panel 4GB</h3>
+          <p class="product-description">Pterodactyl Panel with 4GB RAM allocation for your game servers. Ideal for larger game servers with more players.</p>
+          <div class="product-price">Rp4.000/month</div>
+          <a href="https://t.me/ortukloe?text=Halo,%20aku%20mau%20order%20Panel%204GB" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+      
+      <div class="product-card" data-category="panel">
+        <span class="product-category panel">Panel</span>
+        <div class="product-content">
+          <h3 class="product-title">Panel Unlimited</h3>
+          <p class="product-description">Pterodactyl Panel with unlimited RAM allocation for your game servers. Perfect for large game servers and communities.</p>
+          <div class="product-price">Rp5.000/month</div>
+          <a href="https://t.me/ortukloe?text=Halo,%20aku%20mau%20order%20Panel%20Unlimited" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+      
+      <div class="product-card" data-category="panel">
+        <span class="product-category panel">Panel</span>
+        <div class="product-content">
+          <h3 class="product-title">Reseller Panel</h3>
+          <p class="product-description">Complete panel with selling features. Perfect for resellers who want to start their own hosting business.</p>
+          <div class="product-price">Rp8.000/month</div>
+          <a href="https://t.me/ortukloe?text=Halo,%20aku%20mau%20order%20Resseler%20Panel" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+      
+      <div class="product-card" data-category="panel">
+        <span class="product-category panel">Panel</span>
+        <div class="product-content">
+          <h3 class="product-title">Admin Panel</h3>
+          <p class="product-description">Admin panel with free CPanel script included. Full control over your servers with advanced management features.</p>
+          <div class="product-price">Rp10.000/month</div>
+          <a href="https://t.me/ortukloe?text=Halo,%20aku%20mau%20order%20Admin%20Panel" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+      
+      <!-- Service Products -->
+      <div class="product-card" data-category="service">
+        <span class="product-category service">Service</span>
+        <div class="product-content">
+          <h3 class="product-title">Jasa Install Panel</h3>
+          <p class="product-description">Professional installation of Pterodactyl Panel on your VPS. Quick and hassle-free setup with full configuration.</p>
+          <div class="product-price">Rp10.000</div>
+          <a href="https://t.me/ortukloe?text=Halo,%20aku%20mau%20pakai%20jasa%20install%20panel" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+      
+      <div class="product-card" data-category="service">
+        <span class="product-category service">Service</span>
+        <div class="product-content">
+          <h3 class="product-title">Script allxddev v12</h3>
+          <p class="product-description">Latest allxddev script with new features and improved performance. Perfect for creating advanced WhatsApp bots.</p>
+          <div class="product-price">Rp100.000</div>
+          <a href="https://t.me/allxddev?text=Halo,%20aku%20mau%20beli%20script%20allxddev%20V12" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+      
+      <div class="product-card" data-category="service">
+        <span class="product-category service">Service</span>
+        <div class="product-content">
+          <h3 class="product-title">Custom Bug Script</h3>
+          <p class="product-description">Custom bug script development service by allxddev. Tailored to your specific needs and requirements.</p>
+          <div class="product-price">Contact for pricing</div>
+          <a href="https://t.me/ortukloe?text=Halo,%20aku%20mau%20order%20SC%20Bug" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+      
+      <div class="product-card" data-category="service">
+        <span class="product-category service">Service</span>
+        <div class="product-content">
+          <h3 class="product-title">Custom CPanel Script</h3>
+          <p class="product-description">Custom CPanel script development service by allxddev. Built to your specifications with all the features you need.</p>
+          <div class="product-price">Contact for pricing</div>
+          <a href="https://t.me/ortukloe?text=Halo,%20aku%20mau%20order%20SC%20Cpanel" class="product-btn" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Cart">
+            Order Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+    <p>&copy; 2025 AllxdDev-Hosting. All rights reserved.</p>
+  </footer>
+  
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const icon = document.getElementById("theme-icon");
+      const current = body.getAttribute("data-theme");
+      
+      if (current === "light") {
+        body.removeAttribute("data-theme");
+        icon.src = "https://cdn-icons-png.flaticon.com/512/1164/1164954.png";
+        localStorage.setItem("theme", "dark");
+      } else {
+        body.setAttribute("data-theme", "light");
+        icon.src = "https://cdn-icons-png.flaticon.com/512/869/869869.png";
+        localStorage.setItem("theme", "light");
+      }
+    }
+    
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "light") {
+      document.body.setAttribute("data-theme", "light");
+      document.getElementById("theme-icon").src = "https://cdn-icons-png.flaticon.com/512/869/869869.png";
+    }
+    
+    // Menu toggle functionality
+    function toggleMenu() {
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+      const menuToggle = document.getElementById("menuToggle");
+      
+      sidebar.classList.toggle("open");
+      overlay.classList.toggle("active");
+      menuToggle.classList.toggle("active");
+    }
+    
+    // Close menu when clicking overlay
+    document.getElementById("overlay").addEventListener("click", function() {
+      document.getElementById("sidebar").classList.remove("open");
+      document.getElementById("overlay").classList.remove("active");
+      document.getElementById("menuToggle").classList.remove("active");
+    });
+    
+    // Category filter functionality
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const productCards = document.querySelectorAll('.product-card');
+    
+    categoryButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all buttons
+        categoryButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to clicked button
+        button.classList.add('active');
+        
+        // Get category from data attribute
+        const category = button.getAttribute('data-category');
+        
+        // Filter products
+        productCards.forEach(card => {
+          if (category === 'all' || card.getAttribute('data-category') === category) {
+            card.style.display = 'flex';
+            
+            // Add animation
+            card.style.animation = 'fadeIn 0.5s forwards';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+    
+    // Animate elements on scroll
+    function animateOnScroll() {
+      const elements = document.querySelectorAll('.product-card');
+      
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.3;
+        
+        if (elementPosition < screenPosition) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    }
+    
+    // Set initial styles for animation
+    document.querySelectorAll('.product-card').forEach(element => {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(20px)';
+      element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    });
+    
+    // Listen for scroll events
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+  </script>
+</body>
+</html>
